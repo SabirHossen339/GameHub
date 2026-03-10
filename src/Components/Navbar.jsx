@@ -3,113 +3,122 @@ import gameLogo from "../assets/vector-graphic-controller-gamepad-video-games-22
 import { NavLink } from "react-router";
 
 const Navbar = () => {
+
   const [open, setOpen] = useState(false);
 
-  const navLinks = (
-    <>
-      <NavLink
-        to="/"
-        className={({ isActive }) =>
-          isActive
-            ? "text-blue-400 font-bold text-xl underline"
-            : "hover:text-blue-300 text-xl"
-        }
-      >
-        Home
-      </NavLink>
-
-      <NavLink
-        to="/game"
-        className={({ isActive }) =>
-          isActive
-            ? "text-blue-400 font-bold text-xl underline"
-            : "hover:text-blue-300 text-xl"
-        }
-      >
-        All Games
-      </NavLink>
-
-      <NavLink
-        to="/news"
-        className={({ isActive }) =>
-          isActive
-            ? "text-blue-400 font-bold text-xl underline"
-            : "hover:text-blue-300 text-xl"
-        }
-      >
-        About
-      </NavLink>
-    </>
-  );
+  const navStyle = ({ isActive }) =>
+    isActive
+      ? "text-blue-400 font-bold relative after:w-full"
+      : "hover:text-blue-300 relative after:w-0 hover:after:w-full";
 
   return (
-    <nav className="bg-gray-900 text-white shadow-xl">
+    <nav className="sticky top-0 z-50 backdrop-blur-lg bg-gray-900/70 border-b border-white/10 shadow-xl">
 
-      <div className="flex justify-between items-center px-6 py-4">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-2 py-4">
 
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <img className="h-14 w-14 md:h-16 md:w-16" src={gameLogo} alt="" />
-          <NavLink className="text-2xl md:text-3xl font-bold" to="/">
+          <img className="h-12 w-12 md:h-14 md:w-14" src={gameLogo} alt="" />
+          <NavLink to="/" className="text-2xl md:text-3xl font-bold">
             Game<span className="text-blue-400">Hub</span>
           </NavLink>
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden lg:flex gap-6 items-center">
-          {navLinks}
+        <div className="hidden lg:flex items-center gap-5 text-lg">
 
           <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `${navStyle({ isActive })} after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300`
+            }
+          >
+            Home
+          </NavLink>
+
+          <NavLink
+            to="/game"
+            className={({ isActive }) =>
+              `${navStyle({ isActive })} after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300`
+            }
+          >
+            All Games
+          </NavLink>
+
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `${navStyle({ isActive })} after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-blue-400 after:transition-all after:duration-300`
+            }
+          >
+            About
+          </NavLink>
+
+          {/* Auth Buttons */}
+          <NavLink
             to="/login"
-            className="btn btn-primary rounded-xl border-0 font-bold"
+            className="btn btn-primary rounded-xl border-0 font-bold transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-105"
           >
             Login
           </NavLink>
 
           <NavLink
             to="/register"
-            className="btn btn-warning rounded-xl border-0 font-bold"
+            className="btn btn-warning rounded-xl border-0 font-bold transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-105"
           >
             Register
           </NavLink>
+
+          {/* Avatar placeholder */}
+          <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-sm font-bold transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-105">
+            U
+          </div>
+
         </div>
 
-        {/* Hamburger Button */}
+        {/* Hamburger */}
         <button
           onClick={() => setOpen(!open)}
           className="lg:hidden text-3xl"
         >
-          ☰
+          {open ? "✕" : "☰"}
         </button>
+
       </div>
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden overflow-hidden transition-all duration-300 ${
-          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        className={`lg:hidden transition-all duration-500 overflow-hidden ${
+          open ? "max-h-100" : "max-h-0"
         }`}
       >
-        <div className="flex justify-between gap-5 px-6 pb-6 pt-2 bg-gray-800">
+        <div className="flex flex-col gap-6 px-6 pb-6 pt-4 bg-gray-900/95 backdrop-blur-lg text-lg">
 
-          <div className="flex flex-col gap-5">
-            {navLinks}
-          </div>
+          <NavLink to="/" className="hover:text-blue-400">
+            Home
+          </NavLink>
 
-          <div className="flex flex-col justify-center items-center gap-5">
-            <NavLink
+          <NavLink to="/game" className="hover:text-blue-400">
+            All Games
+          </NavLink>
+
+          <NavLink to="/about" className="hover:text-blue-400">
+            About
+          </NavLink>
+
+          <NavLink
             to="/login"
-            className="btn btn-primary w-25 rounded-xl border-0 font-bold"
+            className="btn btn-primary rounded-xl border-0 w-full"
           >
             Login
           </NavLink>
 
           <NavLink
             to="/register"
-            className="btn btn-warning w-25 rounded-xl border-0 font-bold"
+            className="btn btn-warning rounded-xl border-0 w-full"
           >
             Register
           </NavLink>
-          </div>
 
         </div>
       </div>
